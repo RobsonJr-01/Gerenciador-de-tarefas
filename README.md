@@ -75,10 +75,4 @@ public/style.css
 - **Post/Redirect/Get**: evita reenvio duplicado do formulário ao atualizar a página.
 - **404 tratado**: tarefa inexistente exibe página de erro amigável.
 
-## Roteiro sugerido para o vídeo (5–8 min)
-1. Apresentar o problema e a estrutura de pastas (MVC).
-2. Mostrar o Model: array, `validar`, `criar`, `atualizar`, `concluir`, `excluir`.
-3. Mostrar as rotas e o Controller.
-4. Mostrar as Views (partials, `form.ejs` reaproveitado para cadastro e edição).
-5. Demonstrar no navegador: cadastro inválido e válido, listar, detalhes, editar, concluir, filtros, excluir com confirmação.
-6. Explicar o fluxo de uma requisição e as decisões técnicas.
+
