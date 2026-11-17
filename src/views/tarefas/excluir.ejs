@@ -1,0 +1,11 @@
+<%- include('../partials/header') %>
+<section class="cartao">
+  <h1>Confirmar exclusão</h1>
+  <p>Tem certeza de que deseja excluir a tarefa <strong><%= tarefa.titulo %></strong> (<%= tarefa.disciplina %>)?</p>
+  <p>Esta ação não pode ser desfeita.</p>
+  <form method="POST" action="/tarefas/<%= tarefa.id %>/excluir" class="botoes">
+    <button class="btn vermelho" type="submit">Sim, excluir</button>
+    <a href="/tarefas/<%= tarefa.id %>">Cancelar</a>
+  </form>
+</section>
+<%- include('../partials/footer') %>

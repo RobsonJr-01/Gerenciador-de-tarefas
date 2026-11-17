@@ -1,0 +1,27 @@
+<%- include('../partials/header') %>
+<section class="cartao">
+  <h1><%= tarefa.titulo %></h1>
+  <dl>
+    <dt>ID</dt><dd>#<%= tarefa.id %></dd>
+    <dt>Disciplina</dt><dd><%= tarefa.disciplina %></dd>
+    <dt>Status</dt>
+    <dd><span class="selo <%= tarefa.atrasada ? 'atrasada' : tarefa.status %>">
+      <%= tarefa.atrasada ? 'Atrasada' : (tarefa.status === 'concluida' ? 'Concluída' : 'Pendente') %>
+    </span></dd>
+    <dt>Prazo</dt><dd><%= dataBR(tarefa.prazo) %></dd>
+    <dt>Descrição</dt><dd><%= tarefa.descricao || 'Sem descrição.' %></dd>
+    <dt>Criada em</dt><dd><%= dataHoraBR(tarefa.criadaEm) %></dd>
+    <% if (tarefa.concluidaEm) { %><dt>Concluída em</dt><dd><%= dataHoraBR(tarefa.concluidaEm) %></dd><% } %>
+  </dl>
+  <div class="botoes">
+    <a class="btn" href="/tarefas/<%= tarefa.id %>/editar">Editar</a>
+    <% if (tarefa.status === 'pendente') { %>
+      <form method="POST" action="/tarefas/<%= tarefa.id %>/concluir"><button class="btn verde">Concluir</button></form>
+    <% } else { %>
+      <form method="POST" action="/tarefas/<%= tarefa.id %>/reabrir"><button class="btn cinza">Reabrir</button></form>
+    <% } %>
+    <a class="btn vermelho" href="/tarefas/<%= tarefa.id %>/excluir">Excluir</a>
+    <a href="/tarefas">Voltar</a>
+  </div>
+</section>
+<%- include('../partials/footer') %>

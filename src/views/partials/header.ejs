@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Study Board — Tarefas Acadêmicas</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <header class="topo">
+    <a class="marca" href="/tarefas"><span class="logo">✎</span> Study Board</a>
+    <a class="btn" href="/tarefas/nova">+ Nova tarefa</a>
+  </header>
+  <main class="conteudo">
+    <% if (typeof mensagem !== 'undefined' && mensagem) { %>
+      <div class="aviso"><%= mensagem %></div>
+    <% } %>

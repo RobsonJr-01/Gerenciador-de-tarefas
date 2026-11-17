@@ -1,0 +1,58 @@
+<%- include('../partials/header') %>
+<h1>Painel de tarefas</h1>
+
+<section class="painel">
+  <div class="card-resumo"><strong><%= resumo.total %></strong><span>Total</span></div>
+  <div class="card-resumo amarelo"><strong><%= resumo.pendentes %></strong><span>Pendentes</span></div>
+  <div class="card-resumo verde"><strong><%= resumo.concluidas %></strong><span>Concluídas</span></div>
+  <div class="card-resumo vermelho"><strong><%= resumo.atrasadas %></strong><span>Atrasadas</span></div>
+</section>
+
+<form class="barra" method="GET" action="/tarefas">
+  <input type="hidden" name="status" value="<%= filtro === 'todas' ? '' : filtro %>">
+  <input type="search" name="busca" value="<%= busca %>" placeholder="Buscar por título ou disciplina…">
+  <select name="ordem">
+    <option value="recentes" <%= ordem === 'recentes' ? 'selected' : '' %>>Mais recentes</option>
+    <option value="titulo" <%= ordem === 'titulo' ? 'selected' : '' %>>Título (A–Z)</option>
+    <option value="prazo" <%= ordem === 'prazo' ? 'selected' : '' %>>Prazo mais próximo</option>
+  </select>
+  <button class="btn" type="submit">Aplicar</button>
+</form>
+
+<nav class="filtros">
+  <a href="/tarefas?busca=<%= encodeURIComponent(busca) %>&ordem=<%= ordem %>" class="<%= filtro === 'todas' ? 'ativo' : '' %>">Todas</a>
+  <a href="/tarefas?status=pendente&busca=<%= encodeURIComponent(busca) %>&ordem=<%= ordem %>" class="<%= filtro === 'pendente' ? 'ativo' : '' %>">Pendentes</a>
+  <a href="/tarefas?status=concluida&busca=<%= encodeURIComponent(busca) %>&ordem=<%= ordem %>" class="<%= filtro === 'concluida' ? 'ativo' : '' %>">Concluídas</a>
+</nav>
+
+<% if (tarefas.length === 0) { %>
+  <p class="vazio">Nenhuma tarefa encontrada.</p>
+<% } else { %>
+  <ul class="lista">
+    <% tarefas.forEach((t) => { %>
+      <li class="item <%= t.status %> <%= t.atrasada ? 'atrasada' : '' %>">
+        <div class="info">
+          <a class="item-titulo" href="/tarefas/<%= t.id %>"><%= t.titulo %></a>
+          <div class="meta">
+            <span class="disciplina"><%= t.disciplina %></span>
+            <% if (t.prazo) { %><span>Prazo: <%= dataBR(t.prazo) %></span><% } %>
+            <span class="selo <%= t.atrasada ? 'atrasada' : t.status %>">
+              <%= t.atrasada ? 'Atrasada' : (t.status === 'concluida' ? 'Concluída' : 'Pendente') %>
+            </span>
+          </div>
+        </div>
+        <div class="acoes">
+          <a href="/tarefas/<%= t.id %>">Detalhes</a>
+          <a href="/tarefas/<%= t.id %>/editar">Editar</a>
+          <% if (t.status === 'pendente') { %>
+            <form method="POST" action="/tarefas/<%= t.id %>/concluir"><button class="link verde">Concluir</button></form>
+          <% } else { %>
+            <form method="POST" action="/tarefas/<%= t.id %>/reabrir"><button class="link">Reabrir</button></form>
+          <% } %>
+          <a class="perigo" href="/tarefas/<%= t.id %>/excluir">Excluir</a>
+        </div>
+      </li>
+    <% }) %>
+  </ul>
+<% } %>
+<%- include('../partials/footer') %>
